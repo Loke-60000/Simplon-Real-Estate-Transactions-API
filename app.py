@@ -177,11 +177,3 @@ async def transactions_in_high_income_cities():
 # Main function to run the app (not required)
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)
-
-'''
-http://localhost:8000/average-revenue/2020?city=Montpellier
-http://localhost:8000/transactions?cities=paris&limit=5
-http://localhost:8000/transaction-count/2023?city=Paris
-http://localhost:8000/small-apartment-transaction-count?city=Marseille&year=2021
-http://localhost:8000/count-small-apartments?city=Lyon&year=2023
-'''
