@@ -1,5 +1,7 @@
 # Real Estate Transactions API Documentation
 
+***
+
 # Table of Contents
 1. [Overview](#overview)
 2. [Endpoints](#endpoints)
@@ -15,9 +17,13 @@
 3. [How to Run](#how-to-run)
 4. [Notes](#notes)
 
+***
+
 ## Overview
 
 This API provides access to real estate transaction data, allowing users to query various aspects such as average revenue, transaction counts, and specific data related to smaller apartments across different cities and years.
+
+***
 
 ## Endpoints
 
@@ -137,6 +143,8 @@ This API provides access to real estate transaction data, allowing users to quer
 - Ensure FastAPI and Uvicorn are installed.
 - Run the server using `uvicorn main:app --reload`, assuming the script is named `main.py`.
 - Access the API at `http://localhost:8000`.
+
+***
 
 ## Notes
 
