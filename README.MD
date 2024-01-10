@@ -1,5 +1,20 @@
 # Real Estate Transactions API Documentation
 
+# Table of Contents
+1. [Overview](#overview)
+2. [Endpoints](#endpoints)
+   - [1. Average Revenue](#1-average-revenue)
+   - [2. Transactions](#2-transactions)
+   - [3. Transaction Count](#3-transaction-count)
+   - [4. Small Apartment Transaction Count](#4-small-apartment-transaction-count)
+   - [5. Count Small Apartments](#5-count-small-apartments)
+   - [6. Property Piece Counts](#6-property-piece-counts)
+   - [7. Average Price Per Square Meter](#7-average-price-per-square-meter)
+   - [8. Sales by Department](#8-sales-by-department)
+   - [9. Transactions in High-Income Cities](#9-transactions-in-high-income-cities)
+3. [How to Run](#how-to-run)
+4. [Notes](#notes)
+
 ## Overview
 
 This API provides access to real estate transaction data, allowing users to query various aspects such as average revenue, transaction counts, and specific data related to smaller apartments across different cities and years.
@@ -95,6 +110,27 @@ This API provides access to real estate transaction data, allowing users to quer
   - 500 Internal Server Error for database-related issues
 - **Example**: `http://localhost:8000/average-price-per-square-meter?city=Avignon&year=2022&building_type=Maison`
 
+### 8. Sales by Department
+- **URL**: `/sales-by-department`
+- **Method**: `GET`
+- **No Query Params**
+- **Success Response**: JSON object listing each department with its corresponding number of sales, ordered by the number of sales in descending order.
+- **Error Response**: 
+  - 404 Not Found if no data is found
+  - 500 Internal Server Error for database-related issues
+- **Example**: `http://localhost:8000/sales-by-department`
+
+### 9. Transactions in High-Income Cities
+- **URL**: `/transactions-in-high-income-cities`
+- **Method**: `GET`
+- **No Query Params**
+- **Success Response**: JSON object listing each city with its corresponding number of real estate transactions in 2022, where the average fiscal revenue in 2018 was above 10,000.
+- **Error Response**: 
+  - 404 Not Found if no data is found
+  - 500 Internal Server Error for database-related issues
+- **Example**: `http://localhost:8000/transactions-in-high-income-cities`
+
+***
 
 ## How to Run
 
