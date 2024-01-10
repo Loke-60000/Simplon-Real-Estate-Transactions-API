@@ -91,7 +91,7 @@ async def transaction_count(city: str, year: str):
         raise HTTPException(status_code=500, detail=f"Internal server error: {str(e)}")
 
 @app.get("/count-small-apartments")
-async def count_small_apartments(city: str, year: str, conn: sqlite3.Connection = Depends(db_connection)):
+async def count_small_apartments(city: str, year: str):
     if not year.isdigit() or len(year) != 4:
         raise HTTPException(status_code=400, detail="Year must be a valid 4-digit number")
     year_pattern = f"{year}%"
@@ -103,6 +103,7 @@ async def count_small_apartments(city: str, year: str, conn: sqlite3.Connection 
         return {"small_apartment_count": result[0]}
     except sqlite3.Error as e:
         raise HTTPException(status_code=500, detail=f"Database error: {str(e)}")
+
 
 
 # Main function to run the app (not required)
