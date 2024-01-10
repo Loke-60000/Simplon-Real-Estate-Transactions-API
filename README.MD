@@ -129,12 +129,14 @@ This API provides access to real estate transaction data, allowing users to quer
 ### 9. Transactions in High-Income Cities
 - **URL**: `/transactions-in-high-income-cities`
 - **Method**: `GET`
-- **No Query Params**
-- **Success Response**: JSON object listing each city with its corresponding number of real estate transactions in 2022, where the average fiscal revenue in 2018 was above 10,000.
+- **Query Params**: 
+  - `city=[string]` (optional)
+  - `minimum_income=[integer]` (optional, default is 10000)
+- **Success Response**: JSON object listing each city with its corresponding number of real estate transactions in 2022, where the average fiscal revenue in 2018 was above the specified minimum income.
 - **Error Response**: 
   - 404 Not Found if no data is found
   - 500 Internal Server Error for database-related issues
-- **Example**: `http://localhost:8000/transactions-in-high-income-cities`
+- **Example**: `http://localhost:8000/transactions-in-high-income-cities?city=Paris&minimum_income=15000`
 
 ***
 
