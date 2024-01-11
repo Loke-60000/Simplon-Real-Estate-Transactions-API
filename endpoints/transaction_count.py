@@ -1,5 +1,6 @@
 from fastapi import HTTPException
 from database import get_db_connection
+from database import handle_sql_error
 import sqlite3
 
 async def transaction_count(city: str, year: str):
@@ -15,7 +16,7 @@ async def transaction_count(city: str, year: str):
         if result is None:
             raise HTTPException(status_code=404, detail=f"No data found for city {city} in year {year}")
         return {"transaction_count": result[0]}
-    except sqlite3.Error as e:
-        raise HTTPException(status_code=500, detail=f"Database error: {str(e)}")
+    except Exception as e:
+        raise handle_sql_error(e, "Database error in transaction_count")
     finally:
         conn.close()

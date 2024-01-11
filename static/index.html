@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Real Estate Transactions API Documentation</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+</head>
+<body>
+    <body>
+        <div class="container mt-5">
+            <h1 class="my-4">Real Estate Transactions API Documentation</h1>
+            <hr>
+
+            <div class="row">
+                <div class="col-md-3">
+                    <ul class="list-group">
+                        <h2>Table of Contents</h2>
+                        <li class="list-group-item"><a href="#overview">Overview</a></li>
+                            <ul>
+                                <li class="list-group-item"><a href="#1-average-revenue">1- average-revenue</a></li>
+                                <li class="list-group-item"><a href="#2-transactions">2- transactions</a></li>
+                                <li class="list-group-item"><a href="#3-transaction-count">3- transaction-count</a></li>
+                                <li class="list-group-item"><a href="#4-small-apartment-transaction-count">4- small-apartment-transaction-count</a></li>
+                                <li class="list-group-item"><a href="#5-count-small-apartments">5- count-small-apartments</a></li>
+                                <li class="list-group-item"><a href="#6-property-piece-counts">6- property-piece-counts</a></li>
+                                <li class="list-group-item"><a href="#7-average-price-per-square-meter">7- average-price-per-square-meter</a></li>
+                                <li class="list-group-item"><a href="#8-sales-by-department">8- sales-by-department</a></li>
+                                <li class="list-group-item"><a href="#9-transactions-in-high-income-cities">9- transactions-in-high-income-cities</a></li>
+                            </ul>
+                        <li class="list-group-item"><a href="#endpoints">Endpoints</a></li>
+                        <li class="list-group-item"><a href="#how-to-run">How to Run</a></li>
+                        <li class="list-group-item"><a href="#notes">Notes</a></li>
+                    </ul>
+                </div>
+    
+                <div class="col-md-9">
+                    <div id="overview" class="mb-4">
+                        <h2>Overview</h2>
+                        <p>This API provides access to real estate transaction data, allowing users to query various aspects such as average revenue, transaction counts, and specific data related to smaller apartments across different cities and years.</p>
+                    </div>
+                    
+                    <div id="endpoints" class="mb-4">
+                        <h2>Endpoints</h2>
+                        
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <h3 class="card-title" id="1-average-revenue">1. Average Revenue</h3>
+                                <p class="card-text">
+                                    <strong>URL:</strong> /average-revenue/{year}<br>
+                                    <strong>Method:</strong> GET<br>
+                                    <strong>URL Params:</strong> <br>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;city=[string] (required)<br>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;year=[integer] (required in URL)<br>
+                                    <strong>Success Response:</strong> JSON object with average revenue.<br>
+                                    <strong>Error Response:</strong> <br>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;400 Bad Request if year parameter is missing/invalid<br>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;404 Not Found if no data is available<br>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;500 Internal Server Error for other issues<br>
+                                    <strong>Example:</strong> <a href="http://localhost:8000/average-revenue/2020?city=Montpellier">http://localhost:8000/average-revenue/2020?city=Montpellier</a>
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <h3 class="card-title" id="2-transactions">2. Transactions</h3>
+                                <p class="card-text">
+                                    <strong>URL:</strong> /transactions<br>
+                                    <strong>Method:</strong> GET<br>
+                                    <strong>Query Params:</strong><br>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;cities=[string] (required, comma-separated list)<br>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;limit=[integer] (optional, default is 10)<br>
+                                    <strong>Success Response:</strong> JSON object with a list of transactions.<br>
+                                    <strong>Error Response:</strong><br>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;400 Bad Request if cities parameter is missing<br>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;404 Not Found if no transactions are found<br>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;500 Internal Server Error for other issues<br>
+                                    <strong>Example:</strong> <a href="http://localhost:8000/transactions?cities=paris&limit=5">http://localhost:8000/transactions?cities=paris&limit=5</a>
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <h3 class="card-title" id="3-transaction-count">3. Transaction Count</h3>
+                                <p class="card-text">
+                                    <strong>URL:</strong> /transaction-count/{year}<br>
+                                    <strong>Method:</strong> GET<br>
+                                    <strong>URL Params:</strong><br>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;city=[string] (required)<br>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;year=[integer] (required in URL)<br>
+                                    <strong>Success Response:</strong> JSON object with transaction count.<br>
+                                    <strong>Error Response:</strong><br>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;400 Bad Request if year is invalid<br>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;404 Not Found if no data is found<br>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;500 Internal Server Error for other issues<br>
+                                    <strong>Example:</strong> <a href="http://localhost:8000/transaction-count/2023?city=Paris">http://localhost:8000/transaction-count/2023?city=Paris</a>
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <h3 class="card-title" id="4-small-apartment-transaction-count">4. Small Apartment Transaction Count</h3>
+                                <p class="card-text">
+                                    <strong>URL:</strong> /small-apartment-transaction-count<br>
+                                    <strong>Method:</strong> GET<br>
+                                    <strong>Query Params:</strong><br>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;city=[string] (required)<br>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;year=[integer] (required)<br>
+                                    <strong>Success Response:</strong> JSON object with small apartment transaction count.<br>
+                                    <strong>Error Response:</strong><br>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;400 Bad Request if year is invalid<br>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;404 Not Found if no data is found<br>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;500 Internal Server Error for other issues<br>
+                                    <strong>Example:</strong> <a href="http://localhost:8000/small-apartment-transaction-count?city=Marseille&year=2021">http://localhost:8000/small-apartment-transaction-count?city=Marseille&year=2021</a>
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <h3 class="card-title" id="5-count-small-apartments">5. Count Small Apartments</h3>
+                                <p class="card-text">
+                                    <strong>URL:</strong> /count-small-apartments<br>
+                                    <strong>Method:</strong> GET<br>
+                                    <strong>Query Params:</strong><br>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;city=[string] (required)<br>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;year=[integer] (required)<br>
+                                    <strong>Success Response:</strong> JSON object with small apartment count.<br>
+                                    <strong>Error Response:</strong><br>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;400 Bad Request if year is invalid<br>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;404 Not Found if no data is found<br>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;500 Internal Server Error for other issues<br>
+                                    <strong>Example:</strong> <a href="http://localhost:8000/count-small-apartments?city=Lyon&year=2023">http://localhost:8000/count-small-apartments?city=Lyon&year=2023</a>
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <h3 class="card-title" id="6-property-piece-counts">6. Property Piece Counts</h3>
+                                <p class="card-text">
+                                    <strong>URL:</strong> /piece-counts<br>
+                                    <strong>Method:</strong> GET<br>
+                                    <strong>No Query Params</strong><br>
+                                    <strong>Success Response:</strong> JSON object with the count of properties (apartments and houses) grouped by the number of pieces (rooms).<br>
+                                    <strong>Error Response:</strong><br>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;404 Not Found if no data is found<br>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;500 Internal Server Error for database-related issues<br>
+                                    <strong>Example:</strong> <a href="http://localhost:8000/piece-counts">http://localhost:8000/piece-counts</a>
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <h3 class="card-title" id="7-average-price-per-square-meter">7. Average Price Per Square Meter</h3>
+                                <p class="card-text">
+                                    <strong>URL:</strong> /average-price-per-square-meter<br>
+                                    <strong>Method:</strong> GET<br>
+                                    <strong>Query Params:</strong><br>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;city=[string] (required)<br>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;year=[integer] (required)<br>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;building_type=[string] (required, e.g., 'Maison', 'Appartement')<br>
+                                    <strong>Success Response:</strong> JSON object with the price, habitable surface, and average price per square meter.<br>
+                                    <strong>Error Response:</strong><br>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;400 Bad Request if year is invalid or parameters are missing<br>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;404 Not Found if no data is found<br>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;500 Internal Server Error for database-related issues<br>
+                                    <strong>Example:</strong> <a href="http://localhost:8000/average-price-per-square-meter?city=Avignon&year=2022&building_type=Maison">http://localhost:8000/average-price-per-square-meter?city=Avignon&year=2022&building_type=Maison</a>
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <h3 class="card-title" id="8-sales-by-department">8. Sales by Department</h3>
+                                <p class="card-text">
+                                    <strong>URL:</strong> /sales-by-department<br>
+                                    <strong>Method:</strong> GET<br>
+                                    <strong>No Query Params</strong><br>
+                                    <strong>Success Response:</strong> JSON object listing each department with its corresponding number of sales, ordered by the number of sales in descending order.<br>
+                                    <strong>Error Response:</strong><br>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;404 Not Found if no data is found<br>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;500 Internal Server Error for database-related issues<br>
+                                    <strong>Example:</strong> <a href="http://localhost:8000/sales-by-department">http://localhost:8000/sales-by-department</a>
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <h3 class="card-title" id="9-transactions-in-high-income-cities">9. Transactions in High-Income Cities</h3>
+                                <p class="card-text">
+                                    <strong>URL:</strong> /transactions-in-high-income-cities<br>
+                                    <strong>Method:</strong> GET<br>
+                                    <strong>Query Params:</strong><br>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;city=[string] (optional)<br>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;minimum_income=[integer] (optional, default is 10000)<br>
+                                    <strong>Success Response:</strong> JSON object listing each city with its corresponding number of real estate transactions in 2022, where the average fiscal revenue in 2018 was above the specified minimum income.<br>
+                                    <strong>Error Response:</strong><br>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;404 Not Found if no data is found<br>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;500 Internal Server Error for database-related issues<br>
+                                    <strong>Example:</strong> <a href="http://localhost:8000/transactions-in-high-income-cities?city=Paris&minimum_income=15000">http://localhost:8000/transactions-in-high-income-cities?city=Paris&minimum_income=15000</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div id="how-to-run" class="mb-4">
+                        <h2>How to Run</h2>
+                        <p>
+                            - Ensure FastAPI and Uvicorn are installed.<br>
+                            - Run the server using `uvicorn main:app --reload`, assuming the script is named `main.py`.<br>
+                            - Access the API at <a href="http://localhost:8000">http://localhost:8000</a>.
+                        </p>
+                    </div>
+    
+                    <div id="notes">
+                        <h2>Notes</h2>
+                        <p>
+                            - The database sample used is `Chinook.db`.<br>
+                            - Comprehensive error handling is implemented.<br>
+                            - The API is flexible for different cities and years.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>

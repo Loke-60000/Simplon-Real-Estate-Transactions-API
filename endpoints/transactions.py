@@ -1,5 +1,6 @@
 from fastapi import HTTPException, Query
 from database import get_db_connection
+from database import handle_sql_error
 
 async def get_transactions(cities: str = Query(None, description="Comma-separated list of cities, use % for wildcard"), limit: int = 10):
     if cities is None:
@@ -25,5 +26,7 @@ async def get_transactions(cities: str = Query(None, description="Comma-separate
         if not result:
             raise HTTPException(status_code=404, detail="No transactions found")
         return {"transactions": [dict(row) for row in result]}
+    except Exception as e:
+        raise handle_sql_error(e, "Database error in transactions")
     finally:
         conn.close()

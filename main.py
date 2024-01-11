@@ -1,4 +1,6 @@
 from fastapi import FastAPI
+from fastapi.responses import HTMLResponse
+from fastapi import FastAPI, HTTPException
 import uvicorn
 
 from endpoints.average_revenue import average_revenue
@@ -11,6 +13,17 @@ from endpoints.sales_by_department import sales_by_department
 from endpoints.transactions_in_high_income_cities import transactions_in_high_income_cities
 
 app = FastAPI(title="Real Estate Transactions API")
+
+@app.get("/", response_class=HTMLResponse)
+async def read_index():
+    try:
+        with open("static/index.html", 'r', encoding='utf-8') as f:
+            html_content = f.read()
+        return HTMLResponse(content=html_content)
+    except FileNotFoundError:
+        raise HTTPException(status_code=404, detail="index.html not found")
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"An error occurred: {str(e)}")
 
 app.get("/average-revenue/{year}")(average_revenue)
 app.get("/transactions")(get_transactions)

@@ -1,6 +1,7 @@
 from fastapi import HTTPException
 from database import get_db_connection
 import sqlite3
+from database import handle_sql_error
 
 async def transactions_in_high_income_cities(city: str = None, year: str = "2018", minimum_income: int = 10000):
     # Validate the year
@@ -37,7 +38,7 @@ async def transactions_in_high_income_cities(city: str = None, year: str = "2018
         if not result:
             raise HTTPException(status_code=404, detail="No data found")
         return {"transactions_in_high_income_cities": [dict(row) for row in result]}
-    except sqlite3.Error as e:
-        raise HTTPException(status_code=500, detail=f"Database error: {str(e)}")
+    except Exception as e:
+        raise handle_sql_error(e, "Database error in transactions_in_high_income_cities")
     finally:
         conn.close()

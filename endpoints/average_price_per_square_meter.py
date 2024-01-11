@@ -1,6 +1,6 @@
 from fastapi import HTTPException
 from database import get_db_connection
-import sqlite3
+from database import handle_sql_error
 from fuzzywuzzy import fuzz
 
 async def average_price_per_square_meter(city: str, year: str, building_type: str):
@@ -22,12 +22,11 @@ async def average_price_per_square_meter(city: str, year: str, building_type: st
         if result is None:
             raise HTTPException(status_code=404, detail=f"No data found for city {city}, year {year}, and building type {building_type}")
         
-        # Check if the retrieved values are null
         if result['prix'] is None or result['surface_habitable'] is None or result['prix2'] is None:
             raise HTTPException(status_code=404, detail=f"No data found for city {city}, year {year}, and building type {building_type}")
 
         return {"prix": result['prix'], "surface_habitable": result['surface_habitable'], "average_price_per_square_meter": result['prix2']}
-    except sqlite3.Error as e:
-        raise HTTPException(status_code=500, detail=f"Database error: {str(e)}")
+    except Exception as e:
+        raise handle_sql_error(e, "Database error in average_price_per_square_meter")
     finally:
         conn.close()

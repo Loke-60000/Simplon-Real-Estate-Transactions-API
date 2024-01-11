@@ -1,5 +1,6 @@
 from fastapi import HTTPException
 from database import get_db_connection
+from database import handle_sql_error
 import sqlite3
 
 async def sales_by_department():
@@ -16,7 +17,7 @@ async def sales_by_department():
         if not result:
             raise HTTPException(status_code=404, detail="No data found")
         return {"sales_by_department": [dict(row) for row in result]}
-    except sqlite3.Error as e:
-        raise HTTPException(status_code=500, detail=f"Database error: {str(e)}")
+    except Exception as e:
+        raise handle_sql_error(e, "Database error in sales_by_department")
     finally:
         conn.close()

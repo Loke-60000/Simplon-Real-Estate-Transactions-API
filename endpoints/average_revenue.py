@@ -1,5 +1,6 @@
 from fastapi import HTTPException
 from database import get_db_connection
+from database import handle_sql_error
 
 async def average_revenue(city: str, year: str = None):
     if year is None:
@@ -15,7 +16,7 @@ async def average_revenue(city: str, year: str = None):
         if result is None:
             raise HTTPException(status_code=404, detail=f"No data found for city {city} in year {year}")
         return {"revenu_fiscal_moyen": result['revenu_fiscal_moyen']}
-    except sqlite3.Error as e:
-        raise HTTPException(status_code=500, detail=f"Database error: {str(e)}")
+    except Exception as e:
+        raise handle_sql_error(e, "Database error in average_revenue")
     finally:
         conn.close()

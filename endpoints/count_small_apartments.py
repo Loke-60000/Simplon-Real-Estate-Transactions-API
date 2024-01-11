@@ -1,6 +1,7 @@
 from fastapi import HTTPException
 from database import get_db_connection
 import sqlite3
+from database import handle_sql_error
 
 async def count_small_apartments(city: str, year: str):
     if not year.isdigit() or len(year) != 4:
@@ -15,7 +16,7 @@ async def count_small_apartments(city: str, year: str):
         if result is None:
             raise HTTPException(status_code=404, detail=f"No data found for city {city} in year {year}")
         return {"small_apartment_count": result[0]}
-    except sqlite3.Error as e:
-        raise HTTPException(status_code=500, detail=f"Database error: {str(e)}")
+    except Exception as e:
+        raise handle_sql_error(e, "Database error in count_small_apartments")
     finally:
         conn.close()
