@@ -14,9 +14,9 @@ logging.basicConfig(level=logging.ERROR, filename='app.log', filemode='a', forma
 
 def handle_sql_error(e: Exception, detail_message: str, status_code: int = 500):
     logging.error(f"SQL Error: {str(e)}")
-    # Check if the exception is an instance of sqlite3.Error
+
     if isinstance(e, sqlite3.Error):
-        # Return an HTTPException with the provided details
+
         return HTTPException(status_code=status_code, detail=f"{detail_message}: {str(e)}")
     else:
         # Handle non-sqlite3 errors differently if needed
