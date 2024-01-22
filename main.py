@@ -2,6 +2,17 @@ from fastapi import FastAPI
 from fastapi.responses import HTMLResponse
 from fastapi import FastAPI, HTTPException
 import uvicorn
+from fastapi.middleware.cors import CORSMiddleware
+
+app = FastAPI(title="Real Estate Transactions API")
+
+# Enable CORS
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 from endpoints.average_revenue import average_revenue
 from endpoints.transactions import get_transactions
