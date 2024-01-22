@@ -19,7 +19,7 @@ from endpoints.transactions import get_transactions
 from endpoints.transaction_count import transaction_count
 from endpoints.count_small_apartments import count_small_apartments
 from endpoints.piece_counts import piece_counts
-from endpoints.average_price_per_square_meter import average_price_per_square_meter
+from endpoints.og_average_price_per_square_meter import average_price_per_square_meter
 from endpoints.sales_by_department import sales_by_department
 from endpoints.transactions_in_high_income_cities import transactions_in_high_income_cities
 
